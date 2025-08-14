@@ -574,6 +574,13 @@ class PcbnewParser(EcadParser):
         footprints = []
         for f in self.footprints:
             ref = f.GetReference()
+            
+            # Footprint type
+            attr = f.GetAttributes()
+            is_smd = bool(attr & pcbnew.FP_SMD)
+            is_tht = bool(attr & pcbnew.FP_THROUGH_HOLE)
+            
+            fpType = "smd" if is_smd else "th" if is_tht else ""
 
             # bounding box
             if hasattr(pcbnew, 'MODULE'):
@@ -640,6 +647,7 @@ class PcbnewParser(EcadParser):
             # add footprint
             footprints.append({
                 "ref": ref,
+                "type": fpType,
                 "bbox": bbox,
                 "pads": pads,
                 "drawings": drawings,

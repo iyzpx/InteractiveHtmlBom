@@ -190,6 +190,17 @@
         </button>
       </div>
       <div class="button-container hideonprint">
+        <button id="tht-btn" class="left-most-button" onclick="filterFootprintType('th')"
+                title="THT only parts">THT
+        </button>
+        <button id="ts-btn" class="middle-button" onclick="filterFootprintType('')"
+                title="THT and SMD parts">All
+        </button>
+        <button id="smd-btn" class="right-most-button" onclick="filterFootprintType('smd')"
+                title="SMD only parts">SMD
+        </button>
+      </div>
+      <div class="button-container hideonprint">
         <button id="bom-btn" class="left-most-button" onclick="changeBomLayout('bom-only')"
                 title="BOM only"></button>
         <button id="lr-btn" class="middle-button" onclick="changeBomLayout('left-right')"

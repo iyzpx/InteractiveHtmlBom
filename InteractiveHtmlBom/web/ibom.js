@@ -335,6 +335,11 @@ function entryMatches(entry) {
   return false;
 }
 
+function matchFootprint(entry) {
+  let fId = entry[0][1];
+  return (pcbdata.footprints[fId].type == fpType);
+}
+
 function findRefInEntry(entry) {
   return entry.filter(r => r[0].toLowerCase() == reflookup);
 }
@@ -656,7 +661,7 @@ function populateBomBody(placeholderColumn = null, placeHolderElements = null) {
   }
   for (var i in bomtable) {
     var bomentry = bomtable[i];
-    if (filter && !entryMatches(bomentry)) {
+    if ((filter && !entryMatches(bomentry)) || (fpType && !matchFootprint(bomentry))) {
       continue;
     }
     var references = null;
@@ -859,6 +864,24 @@ function updateFilter(input) {
 
 function updateRefLookup(input) {
   reflookup = input.toLowerCase();
+  populateBomTable();
+}
+
+function filterFootprintType(type) {
+  document.getElementById("tht-btn").classList.remove("depressed");
+  document.getElementById("ts-btn").classList.remove("depressed");
+  document.getElementById("smd-btn").classList.remove("depressed");
+  switch (type) {
+    case 'th':
+      document.getElementById("tht-btn").classList.add("depressed");
+      break;
+    case 'smd':
+      document.getElementById("smd-btn").classList.add("depressed");
+      break;
+    default:
+      document.getElementById("ts-btn").classList.add("depressed");
+  }
+  fpType = type;
   populateBomTable();
 }
 
@@ -1312,6 +1335,7 @@ window.onload = function (e) {
   bomhead = document.getElementById("bomhead");
   filter = "";
   reflookup = "";
+  fpType = "";
   if (!("nets" in pcbdata)) {
     hideNetlistButton();
   }

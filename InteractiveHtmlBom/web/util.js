@@ -608,6 +608,8 @@ function initDefaults() {
   document.getElementById("rotationDegree").textContent = settings.boardRotation;
   initBooleanSetting("offsetBackRotation", config.offset_back_rotation, "offsetBackRotationCheckbox", setOffsetBackRotation);
 
+  document.getElementById("ts-btn").classList.add("depressed");
+
   settings.netColors = JSON.parse(readStorage("netColors")) || {};
 }
 
